@@ -2,4 +2,4 @@ profiles:
     -
         name: dev
         account: 111222333444
-        role: Developer
+        role: AutomatedCICDUser

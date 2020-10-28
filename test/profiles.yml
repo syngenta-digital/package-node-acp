@@ -1,0 +1,5 @@
+profiles:
+    -
+        name: test
+        account: 111222333444
+        role: Developer

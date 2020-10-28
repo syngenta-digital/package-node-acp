@@ -1,8 +1,69 @@
+const execSync = require('child_process').execSync;
 const fs = require('fs');
 const path = require('path');
 const os = require('os');
 const yaml = require('js-yaml');
 const common = require('./common');
+
+const _isWindows = () => {
+    return /^win/.test(process.platform);
+};
+
+const _isMac = () => {
+    return /^darwin/.test(process.platform);
+};
+
+const _isLinux = () => {
+    return /^linux/.test(process.platform);
+};
+
+const _findTargetOS = () => {
+    if (_isWindows()) {
+        return 'windows';
+    }
+    if (_isLinux()) {
+        return 'linux';
+    }
+    if (_isMac()) {
+        return 'macosx';
+    }
+};
+
+const _setWinEnvVariable = async () => {
+    await execSync('set', ['AWS_SDK_LOAD_CONFIG=1']);
+};
+
+const _setUnixEnvVariable = async () => {
+    const envVariable = process.env.AWS_SDK_LOAD_CONFIG;
+    if (!envVariable || (envVariable && envVariable === 1)) {
+        const shell = process.env.SHELL;
+        let _path = null;
+
+        switch (shell) {
+            case '/bin/bash':
+                _path = `${os.homedir()}/.bashrc`;
+                break;
+            case '/bin/zsh':
+                _path = `${os.homedir()}/.zshrc`;
+                break;
+            default:
+                console.warn(
+                    'UNSUPPORTED OPERATING SYSTEM!!! Please manually set AWS_SDK_LOAD_CONFIG=1 environment variable'
+                );
+                return true;
+        }
+        process.env.AWS_SDK_LOAD_CONFIG = 1;
+        await fs.appendFileSync(_path, `export AWS_SDK_LOAD_CONFIG=1${os.EOL}`);
+    }
+};
+
+const _setLoadConfig = async () => {
+    if (_findTargetOS() === 'windows') {
+        await _setWinEnvVariable();
+    } else {
+        await _setUnixEnvVariable();
+    }
+};
 
 const _readProfileFile = async (args) => {
     const ymlFile = await common.openFile(args.file);
@@ -69,5 +130,6 @@ exports.create = async (args) => {
     await _readProfileFile(args);
     await _setUpDefaults(args, awsSetUp);
     await _writeRoles(args, awsSetUp);
+    await _setLoadConfig();
     console.log(`CREATED AWS PROFILES`);
 };

@@ -25,8 +25,8 @@ $ npx @syngenta-digital/acp --file some-dir/profiles.json
 Flag Name   | Required | Description
 :-----------| :------- | :-----------
 `file`      | true     | The file which lists all the profiles; relative path. Supports yml or json
-`key`       | false    | The AWS access key of primary account; can use environment variables (AWS_ACCESS_KEY_ID)
-`secret`    | false    | The AWS access key of primary account; can use environment variables (AWS_SECRET_ACCESS_KEY)
+`key`       | false    | The AWS access key of source account; can use environment variables (AWS_ACCESS_KEY_ID)
+`secret`    | false    | The AWS access secret of source account; can use environment variables (AWS_SECRET_ACCESS_KEY)
 
 ### Example YML File
 

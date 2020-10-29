@@ -39,6 +39,12 @@
         "profiles",
         "syngenta-digital"
     ],
+    "engines": {
+        "node": ">=12.14.1"
+    },
+    "nyc": {
+        "temp-directory": "./node_modules/.nyc_output"
+    },
     "eslintConfig": {
         "env": {
             "es6": true,

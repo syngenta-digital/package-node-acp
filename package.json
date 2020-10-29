@@ -2,7 +2,7 @@
     "name": "@syngenta-digital/acp",
     "author": "Paul Cruse, Technical Lead Syngenta",
     "main": "src/index.js",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "license": "Apache-2.0",
     "repository": {
         "type": "git",
@@ -19,8 +19,8 @@
         "test": "unittest=true mocha --recursive"
     },
     "dependencies": {
-        "js-yaml": "^3.14.0",
-        "minimist": "^1.2.5"
+        "minimist": "^1.2.5",
+        "yaml": "^1.10.0"
     },
     "devDependencies": {
         "eslint": "^6.8.0",

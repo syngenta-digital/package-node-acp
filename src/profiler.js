@@ -2,7 +2,7 @@ const execSync = require('child_process').execSync;
 const fs = require('fs');
 const path = require('path');
 const os = require('os');
-const yaml = require('js-yaml');
+const yaml = require('yaml');
 const common = require('./common');
 
 const _isWindows = () => {
@@ -63,7 +63,7 @@ const _setLoadConfig = async () => {
 
 const _readProfileFile = async (args) => {
     const ymlFile = await common.openFile(args.file);
-    args.content = await yaml.safeLoad(ymlFile);
+    args.content = await yaml.parse(ymlFile);
 };
 
 const _getAWSPaths = () => {

@@ -1,12 +1,12 @@
 const minimist = require('minimist');
 const profiler = require('./profiler');
-const argumentor = require('./argumentor');
+const defaulter = require('./defaulter');
 const validator = require('./validator');
 
 exports.run = async () => {
     console.log('===== AWS CICD PROFILES STARTED =====');
     let args = minimist(process.argv.slice(2));
-    argumentor.applyArguments(args);
+    defaulter.assign(args);
     const errors = await validator.validate(args);
     if (errors.length) {
         validator.logErrors(errors);

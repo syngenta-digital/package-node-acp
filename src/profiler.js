@@ -38,19 +38,15 @@ const _setUnixEnvVariable = async () => {
     if (!envVariable || (envVariable && envVariable === 1)) {
         const shell = process.env.SHELL;
         let _path = null;
-
-        switch (shell) {
-            case '/bin/bash':
-                _path = `${os.homedir()}/.bashrc`;
-                break;
-            case '/bin/zsh':
-                _path = `${os.homedir()}/.zshrc`;
-                break;
-            default:
-                console.warn(
-                    'UNSUPPORTED OPERATING SYSTEM!!! Please manually set AWS_SDK_LOAD_CONFIG=1 environment variable'
-                );
-                return true;
+        if (shell === '/bin/bash') {
+            _path = `${os.homedir()}/.bashrc`;
+        } else if (shell === '/bin/zsh') {
+            _path = `${os.homedir()}/.zshrc`;
+        } else {
+            console.warn(
+                'UNSUPPORTED OPERATING SYSTEM!!! Please manually set AWS_SDK_LOAD_CONFIG=1 environment variable'
+            );
+            return true;
         }
         process.env.AWS_SDK_LOAD_CONFIG = 1;
         await fs.appendFileSync(_path, `export AWS_SDK_LOAD_CONFIG=1${os.EOL}`);

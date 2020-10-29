@@ -14,4 +14,5 @@ exports.run = async () => {
         await profiler.create(args);
     }
     console.log('===== AWS CICD PROFILES FINISHED =====');
+    return process.exit(0);
 };

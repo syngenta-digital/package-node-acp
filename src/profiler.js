@@ -90,26 +90,12 @@ const _writeDefaultConfigFile = async (awsSetUp) => {
     }
 };
 
-const _writeDefaultCredentialsFile = async (awsSetUp) => {
-    const exists = await fs.existsSync(awsSetUp.credentials);
-    if (exists) {
-        await fs.appendFileSync(awsSetUp.credentials, `${os.EOL}`);
-    }
-};
-
-const _writeDefaultDir = async (awsSetUp) => {
-    try {
-        await fs.mkdirSync(awsSetUp.directory);
-    } catch (error) {
-        console.warn('AWS directory alredy exists');
-    }
-};
-
 const _setUpDefaults = async (args, awsSetUp) => {
-    await _writeDefaultDir(awsSetUp);
-    await _writeDefaultCredentialsFile(awsSetUp);
-    await _writeDefaultConfigFile(awsSetUp);
-    await _writeDefaultRoles(args, awsSetUp);
+    const exists = await fs.existsSync(awsSetUp.credentials);
+    if (!exists) {
+        await fs.mkdirSync(awsSetUp.directory);
+        await _writeDefaultRoles(args, awsSetUp);
+    }
 };
 
 const _writeRoles = async (args, awsSetUp) => {

@@ -1,10 +1,10 @@
-const yaml = require('js-yaml');
+const yaml = require('yaml');
 const common = require('./common');
 
 const _checkProfileFile = async (errors, args) => {
     try {
         const ymlFile = await common.openFile(args.file);
-        const content = await yaml.safeLoad(ymlFile);
+        const content = await yaml.parse(ymlFile);
         if (!content.profiles) {
             errors.push('account file must have single key "profiles" and profiles must be an array');
         }

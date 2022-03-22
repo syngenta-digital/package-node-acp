@@ -19,7 +19,7 @@
         "test": "unittest=true mocha --recursive"
     },
     "dependencies": {
-        "minimist": "^1.2.5",
+        "minimist": "^1.2.6",
         "yaml": "^1.10.2"
     },
     "devDependencies": {
